@@ -15,3 +15,9 @@ class Perceptron:
     
     def activate_function(self, value):
         return 1 if value > 0.5 else 0 #step
+
+    def train(self, inpt, output):
+        predicted = self.predict(inpt)
+        error = output - predicted
+        for w in [*self.weights, self.bias]:
+            w += self.learning_rate * error
