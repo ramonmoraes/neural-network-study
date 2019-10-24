@@ -36,8 +36,13 @@ class Trainer:
                 self.perceptron.train(inpt, output)
 
     def analyze(self):
+        errors = []
         for inpt, output in self.dataset:
+            predicted = self.perceptron.predict(inpt)
             print(f"expected {output}")
-            print(f"got {self.perceptron.predict(inpt)}")
+            print(f"got {predicted}")
+            errors.append(0 if output == predicted else 1)
+
         print(f"Perceptron weights {self.perceptron.weights}")
         print(f"Perceptron bias {self.perceptron.bias}")
+        print(f"Error {mean(errors)}")
