@@ -1,6 +1,3 @@
-
-from collections import namedtuple
-
 class Dataset:
     def __init__(self, inputs, outputs):
         self.inputs = inputs
@@ -10,21 +7,24 @@ class Dataset:
         return zip(self.inputs, self.outputs)
 
     def __getitem__(self, key):
-        return (
-            self.inputs[key],
-            self.outputs[key],
-        )
+        return (self.inputs[key], self.outputs[key])
 
-OR_DATASET = Dataset([
-    [0, 0],
-    [0, 1],
-    [1, 0],
-    [1, 1],
-], [0, 1, 1, 1])
 
-AND_DATASET = Dataset([
-    [0, 0],
-    [0, 1],
-    [1, 0],
-    [1, 1],
-], [0, 0, 0, 1])
+OR_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 1, 1, 1])
+
+AND_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 0, 0, 1])
+
+FIVE_OR_MORE_DATASET = Dataset(
+    [
+        [0, 0, 0],
+        [0, 0, 1],
+        [0, 1, 0],
+        [0, 1, 1],
+        [1, 0, 0],
+        [1, 0, 1],
+        [1, 1, 0],
+        [1, 1, 1],
+    ],
+    [0, 0, 0, 0, 0, 1, 1, 1],
+)
+
