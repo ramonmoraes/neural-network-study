@@ -39,3 +39,5 @@ class Trainer:
         for inpt, output in self.dataset:
             print(f"expected {output}")
             print(f"got {self.perceptron.predict(inpt)}")
+        print(f"Perceptron weights {self.perceptron.weights}")
+        print(f"Perceptron bias {self.perceptron.bias}")
