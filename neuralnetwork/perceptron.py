@@ -8,7 +8,7 @@ class Perceptron:
 
     def __init__(self, inputs):
         self.weights = [random.random() for i in inputs]
-        self.bias = random.random()
+        self.bias = 1
 
     def predict(self, inputs):
         pondered_inputs = [inpt * weight for inpt, weight in zip(inputs, self.weights)]
@@ -18,11 +18,12 @@ class Perceptron:
     def activate_function(self, value):
         return 1 if value > 0.5 else 0  # step
 
-    def train(self, inpt, output):
-        predicted = self.predict(inpt)
-        error = output - predicted
-        for w in [*self.weights, self.bias]:
-            w += self.learning_rate * error
+    def train(self, inputs, output):
+        predicted = self.predict(inputs)
+        pondered_error = self.learning_rate * (output - predicted)
+        self.bias += pondered_error
+        for (index, inpt) in enumerate(inputs):
+            self.weights[index] = self.weights[index] + pondered_error * inpt
 
 
 class Trainer:
