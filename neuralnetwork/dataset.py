@@ -28,3 +28,4 @@ FIVE_OR_MORE_DATASET = Dataset(
     [0, 0, 0, 0, 0, 1, 1, 1],
 )
 
+XOR_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [1, 0, 0, 1])
