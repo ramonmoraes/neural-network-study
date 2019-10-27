@@ -8,7 +8,14 @@ def sigmoid(value):
     return 1 / (1 + math.exp(-value))
 
 
+def d_sigmoid(value, sigmoided=False):
+    sig = value if sigmoided else sigmoid(value)
+    return sig * (1 - sig)
+
+
 class Multilayer:
+    learning_rate = 0.1
+
     def __init__(self, inputs_size, hidden_size, output_size):
         self.inputs = Layer(inputs_size, bias=random.random())
         self.hidden = Layer(hidden_size, bias=random.random())
