@@ -39,8 +39,10 @@ class Multilayer:
         return np.dot(inputs, self.weights[layer_index])
 
     def backpropagate(self, err):
-        for weight in reversed(self.weights):
-            err = np.dot(weight, err)
+        for i in range(len(self.weights) - 1, 0, -1):
+            weight = self.weights[i]
+            err = np.dot(weight, err) * self.learning_rate
+            self.weights[i] = np.subtract(weight, err)
         return err
 
 
