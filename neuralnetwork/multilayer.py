@@ -45,6 +45,12 @@ class Multilayer:
             self.weights[i] = np.subtract(weight, err)
         return err
 
+    def train(self, inputs, outputs, output_as_array=True):
+        predicted = self.feedforward(inputs)
+        outputs = [outputs] if output_as_array else outputs
+        outputs_err = np.subtract(outputs, predicted)
+        self.backpropagate(outputs_err)
+
 
 class Layer:
     def __init__(self, size, bias=0):
