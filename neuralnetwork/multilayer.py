@@ -44,3 +44,16 @@ class Layer:
 
     def __repr__(self):
         return f"<Layer size={self.size} bias={self.bias}>"
+
+
+class Trainer:
+    def __init__(self, mlp, dataset):
+        self.mlp = mlp
+        self.dataset = dataset
+
+    def train_times(self, times, output_as_array=True):
+        for i in range(times):
+            for (inputs, outputs) in self.dataset:
+                this.mlp.train(inputs, outputs)
+
+            
