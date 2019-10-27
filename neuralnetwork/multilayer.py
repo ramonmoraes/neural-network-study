@@ -54,6 +54,5 @@ class Trainer:
     def train_times(self, times, output_as_array=True):
         for i in range(times):
             for (inputs, outputs) in self.dataset:
-                this.mlp.train(inputs, outputs)
+                self.mlp.train(inputs, outputs, output_as_array)
 
-            
