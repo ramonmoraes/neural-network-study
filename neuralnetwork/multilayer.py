@@ -1,6 +1,11 @@
 import random
 
 import numpy as np
+import math
+
+
+def sigmoid(value):
+    return 1 / (1 + math.exp(-value))
 
 
 class Multilayer:
@@ -20,7 +25,7 @@ class Multilayer:
     def feedforward(self, inputs):
         for i in range(len(self.layers) - 1):
             layer = self.layers[i]
-            inputs = [x + layer.bias for x in self.feed_layer(i, inputs)]
+            inputs = [sigmoid(x + layer.bias) for x in self.feed_layer(i, inputs)]
         return inputs
 
     def feed_layer(self, layer_index, inputs):
