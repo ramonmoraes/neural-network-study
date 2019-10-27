@@ -31,6 +31,11 @@ class Multilayer:
     def feed_layer(self, layer_index, inputs):
         return np.dot(inputs, self.weights[layer_index])
 
+    def backpropagate(self, err):
+        for weight in reversed(self.weights):
+            err = np.dot(weight, err)
+        return err
+
 
 class Layer:
     def __init__(self, size, bias=0):
