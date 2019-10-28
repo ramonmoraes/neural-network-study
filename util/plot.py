@@ -29,7 +29,6 @@ def scatter_3d(dataset):
                 x.append(inpt[0])
                 y.append(inpt[1])
                 z.append(inpt[2])
-        import pdb; pdb.set_trace()
         ax.scatter3D(x,y,z, color=color)
     
     scatter_value_color(1, "b")
