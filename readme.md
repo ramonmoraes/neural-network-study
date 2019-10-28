@@ -2,9 +2,9 @@
 ;D
 
 ## Running
-Running as a notebook
+Running as a notebook, at project's root
 ```sh
-$ jupyter notebook
+$ JUPYTER_PATH=. jupyter notebook
 ```
 
 Or the general purpose script
