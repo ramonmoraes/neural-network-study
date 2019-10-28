@@ -5,7 +5,7 @@ import math
 
 
 def sigmoid(value):
-    return 1 / (1 + math.exp(-value))
+    return 1 / (1 + np.exp(-value))
 
 
 def d_sigmoid(value, sigmoided=False):
@@ -29,26 +29,23 @@ class Multilayer:
             matrix = np.random.rand(self.layers[i].size, self.layers[i + 1].size)
             self.weights.append(matrix)
 
-    def feedforward(self, inputs):
+    def feedforward(self, inputs, with_layers = False):
+        layers = [inputs]
         for i in range(len(self.layers) - 1):
             layer = self.layers[i]
             inputs = [sigmoid(x + layer.bias) for x in self.feed_layer(i, inputs)]
-        return inputs
+            layers.append(inputs)
+        return layers if with_layers else inputs
 
     def feed_layer(self, layer_index, inputs):
         return np.dot(inputs, self.weights[layer_index])
 
-    def backpropagate(self, err):
-        for i, weight in enumerate(self.weights[::-1]):
-            reverse_i = len(self.weights) - i - 1
-            err = np.dot(weight, err) * self.learning_rate
-            self.weights[reverse_i] = np.add(weight, err.reshape(err.size, -1))
-        return err
+    def backpropagate(self, inputs, outputs):
+        layers = self.feedforward(inputs, with_layers=True)
+        #implement
 
     def train(self, inputs, outputs):
-        predicted = self.feedforward(inputs)
-        outputs_err = np.subtract(outputs, predicted)
-        self.backpropagate(outputs_err)
+        self.backpropagate(inputs, outputs)
 
 
 class Layer:
