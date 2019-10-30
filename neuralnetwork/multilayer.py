@@ -22,12 +22,17 @@ class Multilayer:
         self.output = Layer(output_size)
 
         self.layers = [self.inputs, self.hidden, self.output]
+        self.link_layers()
 
-        self.weights = []
+    def link_layers(self):
+        layers_index_count = len(self.layers) - 1
+        for i in range(layers_index_count + 1):
+            if i != layers_index_count:
+                matrix = np.random.rand(self.layers[i].size, self.layers[i + 1].size)
+                self.layers[i].forward_weights = matrix
+            if i != 0:
+                self.layers[i].backward_weights = self.layers[i-1].forward_weights
 
-        for i in range(len(self.layers) - 1):
-            matrix = np.random.rand(self.layers[i].size, self.layers[i + 1].size)
-            self.weights.append(matrix)
 
     def feedforward(self, inputs, with_layers = False):
         layers = [inputs]
@@ -37,18 +42,14 @@ class Multilayer:
             layers.append(inputs)
         return layers if with_layers else inputs
 
-    def feed_layer(self, layer_index, inputs):
-        return np.dot(inputs, self.weights[layer_index])
-
-    def backpropagate(self, inputs, outputs):
-        layers = self.feedforward(inputs, with_layers=True)
-        #implement
-
     def train(self, inputs, outputs):
         self.backpropagate(inputs, outputs)
 
 
 class Layer:
+    forward_weights = None
+    backward_weights = None
+
     def __init__(self, size, bias=0):
         self.size = size
         self.bias = bias
