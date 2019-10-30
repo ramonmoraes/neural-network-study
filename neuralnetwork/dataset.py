@@ -17,6 +17,8 @@ OR_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 1, 1, 1])
 
 AND_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 0, 0, 1])
 
+XOR_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 1, 1, 0])
+
 FIVE_OR_MORE_DATASET = Dataset(
     [
         [0, 0, 0],
