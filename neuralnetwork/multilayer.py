@@ -34,7 +34,7 @@ class Multilayer:
                 self.layers[i].backward_weights = self.layers[i-1].forward_weights
 
 
-    def feedforward(self, inputs, with_layers = False):
+    def feedforward(self, inputs, with_layers=False):
         layers = [inputs]
         for i in range(len(self.layers) - 1):
             layer = self.layers[i]
@@ -53,6 +53,12 @@ class Layer:
     def __init__(self, size, bias=0):
         self.size = size
         self.bias = bias
+
+    def forward(inputs):
+        pass
+        
+    def backward(inputs):
+        pass
 
     def __repr__(self):
         return f"<Layer size={self.size} bias={self.bias}>"
