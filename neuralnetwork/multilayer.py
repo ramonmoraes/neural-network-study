@@ -58,10 +58,10 @@ class Layer:
         self.bias = bias
 
     def forward(self, inputs):
-        return np.dot(self.forward_weights, inputs) + self.bias
+        return np.dot(inputs, self.forward_weights) + self.bias
         
     def backward(self, inputs):
-        pass
+        return np.dot(inputs, self.backward_weights.T)
 
     def __repr__(self):
         return f"<Layer size={self.size} bias={self.bias}>"
