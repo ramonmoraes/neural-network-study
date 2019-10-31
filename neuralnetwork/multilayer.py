@@ -33,14 +33,17 @@ class Multilayer:
             if i != 0:
                 self.layers[i].backward_weights = self.layers[i-1].forward_weights
 
+    def predicted(self, inputs):
+        return self.feedforward(inputs)[-1]
 
-    def feedforward(self, inputs, with_layers=False):
+    def feedforward(self, inputs):
         layers = [inputs]
-        for i in range(len(self.layers) - 1):
-            layer = self.layers[i]
-            inputs = [sigmoid(x + layer.bias) for x in self.feed_layer(i, inputs)]
+        for layer in self.layers:
+            if layer.forward_weights is None:
+                continue
+            inputs = layer.forward(inputs)
             layers.append(inputs)
-        return layers if with_layers else inputs
+        return layers
 
     def train(self, inputs, outputs):
         self.backpropagate(inputs, outputs)
@@ -54,10 +57,10 @@ class Layer:
         self.size = size
         self.bias = bias
 
-    def forward(inputs):
-        pass
+    def forward(self, inputs):
+        return np.dot(self.forward_weights, inputs) + self.bias
         
-    def backward(inputs):
+    def backward(self, inputs):
         pass
 
     def __repr__(self):
