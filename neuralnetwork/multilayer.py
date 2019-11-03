@@ -111,9 +111,13 @@ class Trainer:
         print("[Analyzing]")
         errors = []
         for inpt, output in self.dataset:
-            predicted = self.mlp.feedforward(inpt)
+            predicted = self.mlp.predicted(inpt)
             print(f"expected: {output} got:{predicted}")
             errors.append(0 if output == predicted else 1)
 
-        print(f"mlp weights: {self.mlp.weights}")
-        print(f"Error: {np.mean(errors)}")
+        print(f'errors {np.mean(errors)}')
+        print(f"mlp layers")
+        for x in self.mlp.layers:
+            print(x)
+            print(x.forward_weights)
+            print("---")
