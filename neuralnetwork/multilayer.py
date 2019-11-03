@@ -1,6 +1,8 @@
-import random
+from functools import reduce
 
 import numpy as np
+
+import random
 import math
 
 
