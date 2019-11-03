@@ -2,6 +2,7 @@ from functools import reduce
 
 import numpy as np
 
+from neuralnetwork.trainer import Trainable
 import random
 import math
 
@@ -26,7 +27,7 @@ def d_sigmoid(value, sigmoided=False):
     return sig * (1 - sig)
 
 
-class Multilayer:
+class Multilayer(Trainable):
     learning_rate = 0.1
 
     def __init__(self, inputs_size, hidden_size, output_size):
@@ -86,6 +87,12 @@ class Multilayer:
 
             backward_input = layer.backward(error)
 
+    def explain(self):
+        print(f"MLP layers")
+        for l in self.layers:
+            print(l)
+            print(l.forward_weights)
+            print("---")
 
 class Layer:
     forward_weights = None
@@ -104,29 +111,3 @@ class Layer:
 
     def __repr__(self):
         return f"<Layer size={self.size} bias={self.bias}>"
-
-
-class Trainer:
-    def __init__(self, mlp, dataset):
-        self.mlp = mlp
-        self.dataset = dataset
-
-    def train_times(self, times):
-        for i in range(times):
-            for (inputs, outputs) in self.dataset:
-                self.mlp.train(inputs, outputs)
-
-    def analyze(self):
-        print("[Analyzing]")
-        errors = []
-        for inpt, output in self.dataset:
-            predicted = self.mlp.predicted(inpt)
-            print(f"expected: {output} got:{predicted}")
-            errors.append(0 if output == predicted else 1)
-
-        print(f"errors {np.mean(errors)}")
-        print(f"mlp layers")
-        for x in self.mlp.layers:
-            print(x)
-            print(x.forward_weights)
-            print("---")
