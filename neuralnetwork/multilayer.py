@@ -59,30 +59,32 @@ class Multilayer:
         return layers
 
     def train(self, inputs, target_outputs):
+        backward_input = target_outputs
         elegible_layers = [
             l for l in self.layers[::-1] if l.backward_weights is not None
         ]
 
         predicted_outputs = self.feedforward(inputs)
-        error = target_outputs - predicted_outputs[-1]
 
         for layer in elegible_layers:
             output = predicted_outputs.pop()
+            print(f"output: {output}")
+            errors = v_square(backward_input - output)
+            print(f"errors: {errors}")
 
-            import pdb
+            import pdb;pdb.set_trace()
 
-            pdb.set_trace()
-            for weights in layer.backward_weights.T:
+            for weights, error in zip(layer.backward_weights.T, errors.T):
 
                 weight_sum = reduce(lambda x, y: x + y, weights)
                 pondered_error = error / weight_sum * self.learning_rate
-
-                layer.backward_weights += (
-                    layer.backward_weights * pondered_error * output
+                for w in layer.backward_weights:
+                    layer.backward_weights += (
+                    w * pondered_error * predicted_outputs[-1]
                 )
                 layer.bias += layer.bias * pondered_error
 
-            error = layer.backward(error)
+            backward_input = layer.backward(error)
 
 
 class Layer:
