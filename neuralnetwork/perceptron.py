@@ -1,9 +1,10 @@
 import random
-from numpy import mean
+
+from neuralnetwork.trainer import Trainable
 from functools import reduce
 
 
-class Perceptron:
+class Perceptron(Trainable):
     learning_rate = 0.1
 
     def __init__(self, inputs):
@@ -25,25 +26,6 @@ class Perceptron:
         for (index, inpt) in enumerate(inputs):
             self.weights[index] = self.weights[index] + pondered_error * inpt
 
-
-class Trainer:
-    def __init__(self, dataset, perceptron):
-        self.dataset = dataset
-        self.perceptron = perceptron
-
-    def train_times(self, times=100):
-        for i in range(times):
-            for inpt, output in self.dataset:
-                self.perceptron.train(inpt, output)
-
-    def analyze(self):
-        print("[Analyzing]")
-        errors = []
-        for inpt, output in self.dataset:
-            predicted = self.perceptron.predict(inpt)
-            print(f"expected: {output} got:{predicted}")
-            errors.append(0 if output == predicted else 1)
-
-        print(f"Perceptron weights: {self.perceptron.weights}")
-        print(f"Perceptron bias: {self.perceptron.bias}")
-        print(f"Error: {mean(errors)}")
+    def explain(self):
+        print(f"Perceptron weights: {self.weights}")
+        print(f"Perceptron bias: {self.bias}")
