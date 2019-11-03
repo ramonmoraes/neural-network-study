@@ -12,6 +12,10 @@ def gate(val):
 
 v_gate = np.vectorize(gate)
 
+def square(val):
+    return math.pow(val, 2)
+
+v_square = np.vectorize(square)
 
 def sigmoid(value):
     return 1 / (1 + np.exp(-value))
