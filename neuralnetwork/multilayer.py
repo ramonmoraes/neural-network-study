@@ -4,6 +4,13 @@ import numpy as np
 import math
 
 
+def gate(val):
+    return 1 if val > 0.5 else 0
+
+
+v_gate = np.vectorize(gate)
+
+
 def sigmoid(value):
     return 1 / (1 + np.exp(-value))
 
@@ -45,21 +52,42 @@ class Multilayer:
             layers.append(inputs)
         return layers
 
-    def train(self, inputs, outputs):
-        self.backpropagate(inputs, outputs)
+    def train(self, inputs, target_outputs):
+        elegible_layers = [
+            l for l in self.layers[::-1] if l.backward_weights is not None
+        ]
+
+        predicted_outputs = self.feedforward(inputs)
+        error = target_outputs - predicted_outputs[-1]
+
+        for layer in elegible_layers:
+            output = predicted_outputs.pop()
+
+            import pdb; pdb.set_trace()
+            for weights in layer.backward_weights.T:
+                
+                weight_sum = reduce(lambda x, y: x + y, weights)
+                pondered_error = error / weight_sum * self.learning_rate
+                
+                layer.backward_weights += layer.backward_weights * pondered_error * output
+                layer.bias += layer.bias * pondered_error
+                
+
+            error = layer.backward(error)
 
 
 class Layer:
     forward_weights = None
     backward_weights = None
+    activate_func = v_gate
 
-    def __init__(self, size, bias=0):
+    def __init__(self, size, bias=0):   
         self.size = size
         self.bias = bias
 
     def forward(self, inputs):
-        return np.dot(inputs, self.forward_weights) + self.bias
-        
+        return self.activate_func(np.dot(inputs, self.forward_weights) + self.bias)
+
     def backward(self, inputs):
         return np.dot(inputs, self.backward_weights.T)
 
