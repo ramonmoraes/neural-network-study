@@ -26,8 +26,8 @@ class Multilayer:
     learning_rate = 0.1
 
     def __init__(self, inputs_size, hidden_size, output_size):
-        self.inputs = Layer(inputs_size, bias=random.random())
-        self.hidden = Layer(hidden_size, bias=random.random())
+        self.inputs = Layer(inputs_size, bias=1)
+        self.hidden = Layer(hidden_size, bias=-1)
         self.output = Layer(output_size)
 
         self.layers = [self.inputs, self.hidden, self.output]
@@ -40,7 +40,7 @@ class Multilayer:
                 matrix = np.random.rand(self.layers[i].size, self.layers[i + 1].size)
                 self.layers[i].forward_weights = matrix
             if i != 0:
-                self.layers[i].backward_weights = self.layers[i-1].forward_weights
+                self.layers[i].backward_weights = self.layers[i - 1].forward_weights
 
     def predicted(self, inputs):
         return self.feedforward(inputs)[-1]
@@ -65,15 +65,18 @@ class Multilayer:
         for layer in elegible_layers:
             output = predicted_outputs.pop()
 
-            import pdb; pdb.set_trace()
+            import pdb
+
+            pdb.set_trace()
             for weights in layer.backward_weights.T:
-                
+
                 weight_sum = reduce(lambda x, y: x + y, weights)
                 pondered_error = error / weight_sum * self.learning_rate
-                
-                layer.backward_weights += layer.backward_weights * pondered_error * output
+
+                layer.backward_weights += (
+                    layer.backward_weights * pondered_error * output
+                )
                 layer.bias += layer.bias * pondered_error
-                
 
             error = layer.backward(error)
 
@@ -83,7 +86,7 @@ class Layer:
     backward_weights = None
     activate_func = v_gate
 
-    def __init__(self, size, bias=0):   
+    def __init__(self, size, bias=0):
         self.size = size
         self.bias = bias
 
@@ -115,7 +118,7 @@ class Trainer:
             print(f"expected: {output} got:{predicted}")
             errors.append(0 if output == predicted else 1)
 
-        print(f'errors {np.mean(errors)}')
+        print(f"errors {np.mean(errors)}")
         print(f"mlp layers")
         for x in self.mlp.layers:
             print(x)
