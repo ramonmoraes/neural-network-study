@@ -21,6 +21,7 @@ class Trainer:
         print(f"Error: {np.mean(errors)}")
 
         self.trainable.explain()
+        return errors
 
 
 class Trainable:
