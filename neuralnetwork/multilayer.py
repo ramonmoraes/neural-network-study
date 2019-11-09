@@ -15,11 +15,11 @@ v_square = np.vectorize(square)
 
 
 class Multilayer(Trainable):
-    learning_rate = 0.1
+    learning_rate = 0.01
 
     def __init__(self, inputs_size, hidden_size, output_size):
-        self.inputs = Layer(inputs_size, bias=1)
-        self.hidden = Layer(hidden_size, bias=-1)
+        self.inputs = Layer(inputs_size, bias=0.5)
+        self.hidden = Layer(hidden_size, bias=0.5)
         self.output = Layer(output_size)
 
         self.layers = [self.inputs, self.hidden, self.output]
