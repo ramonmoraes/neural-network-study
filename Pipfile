@@ -4,11 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-<<<<<<< HEAD
 black = "*"
-=======
 pytest = "*"
->>>>>>> 47ca65c4573b3aaff67455ebc66769fe17abe78f
 
 [packages]
 numpy = "*"
