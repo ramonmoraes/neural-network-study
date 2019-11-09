@@ -1,5 +1,4 @@
-import random
-
+from numpy import random
 from neuralnetwork.trainer import Trainable
 from functools import reduce
 
@@ -7,8 +6,8 @@ from functools import reduce
 class Perceptron(Trainable):
     learning_rate = 0.1
 
-    def __init__(self, inputs):
-        self.weights = [random.random() for i in inputs]
+    def __init__(self, size):
+        self.weights = random.rand(size)
         self.bias = 1
 
     def predict(self, inputs):
