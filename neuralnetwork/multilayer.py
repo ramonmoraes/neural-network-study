@@ -3,28 +3,15 @@ from functools import reduce
 import numpy as np
 
 from neuralnetwork.trainer import Trainable
+from neuralnetwork import activation_funcs
+
 import random
-import math
-
-
-def gate(val):
-    return 1 if val > 0.5 else 0
-
-
-v_gate = np.vectorize(gate)
 
 def square(val):
-    return math.pow(val, 2)
+    return val ** 2
+
 
 v_square = np.vectorize(square)
-
-def sigmoid(value):
-    return 1 / (1 + np.exp(-value))
-
-
-def d_sigmoid(value, sigmoided=False):
-    sig = value if sigmoided else sigmoid(value)
-    return sig * (1 - sig)
 
 
 class Multilayer(Trainable):
