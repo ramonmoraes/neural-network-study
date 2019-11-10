@@ -7,6 +7,7 @@ from neuralnetwork import activation_funcs
 
 import random
 
+
 def square(val):
     return val ** 2
 
@@ -23,16 +24,23 @@ class Multilayer(Trainable):
         self.output = Layer(output_size)
 
         self.layers = [self.inputs, self.hidden, self.output]
+
+        self.create_weights()
         self.link_layers()
 
-    def link_layers(self):
+    def create_weights(self):
         layers_index_count = len(self.layers) - 1
         for i in range(layers_index_count + 1):
             if i != layers_index_count:
                 matrix = np.random.rand(self.layers[i].size, self.layers[i + 1].size)
                 self.layers[i].forward_weights = matrix
+
+    def link_layers(self):
+        layers_index_count = len(self.layers) - 1
+        for i in range(layers_index_count + 1):
             if i != 0:
                 self.layers[i].backward_weights = self.layers[i - 1].forward_weights
+                self.layers[i].previous_layer = self.layers[i - 1]
 
     def predicted(self, inputs):
         return self.feedforward(inputs)[-1]
