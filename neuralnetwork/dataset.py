@@ -33,8 +33,7 @@ FIVE_OR_MORE_DATASET = Dataset(
     [0, 0, 0, 0, 0, 1, 1, 1],
 )
 
-XOR_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [1, 0, 0, 1])
-
+XOR_DATASET = Dataset([[0, 0], [0, 1], [1, 0], [1, 1]], [0.05, 0.95, 0.95, 0.05])
 
 class MnistDataset(Dataset):
     file_path = "dataset/mnist_train.csv"
