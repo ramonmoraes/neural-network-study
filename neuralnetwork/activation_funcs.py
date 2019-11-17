@@ -32,7 +32,8 @@ def tanh(val):
 v_tanh = np.vectorize(tanh)
 
 def d_tanh(val):
-    tan = tanh(val)
+    tan = val
+    # tan = tanh(val)
     return 1 - tan ** 2
 
 v_d_tanh = np.vectorize(d_tanh)
