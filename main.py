@@ -1,10 +1,9 @@
-from neuralnetwork.dataset import OR_DATASET, AND_DATASET
-from neuralnetwork.perceptron import Perceptron, Trainer
+from neuralnetwork.dataset import XOR_DATASET
+from neuralnetwork.multilayer import Multilayer
+from neuralnetwork.trainer import Trainer
 
-perceptron = Perceptron(AND_DATASET.inputs[0])
+mlp = Multilayer(2,2,1)
+trainer = Trainer(XOR_DATASET, mlp)
 
-trainer = Trainer(AND_DATASET, perceptron)
-
-trainer.analyze()
-trainer.train_times(100)
+trainer.train_times(50)
 trainer.analyze()
